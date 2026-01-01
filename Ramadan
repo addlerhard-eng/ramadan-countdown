@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <title>Отсчёт до Рамадана</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", Tahoma, sans-serif; }
+    html, body { height: 100%; overflow: hidden; }
     body {
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #0b3d2e, #0f5c45, #031b14);
       color: #f5f5f5;
-      overflow: hidden;
       position: relative;
     }
     body::before {
@@ -27,7 +26,24 @@
     @keyframes stars { from { background-position: 0 0; } to { background-position: 0 2000px; } }
     .arabic-layer { position: absolute; inset: 0; font-size: 32px; line-height: 3; letter-spacing: 8px; color: rgba(255,255,255,0.05); text-align: center; animation: drift 120s linear infinite; pointer-events: none; white-space: nowrap; }
     @keyframes drift { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
-    .card { position: relative; z-index: 1; max-width: 600px; width: 90%; text-align: center; padding: 40px 50px; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(10px); border-radius: 22px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 600px;
+      width: 90%;
+      z-index: 1;
+      text-align: center;
+    }
+    .card {
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 40px 50px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      width: 100%;
+    }
     h1 { font-size: 2.2rem; margin-bottom: 25px; letter-spacing: 1px; }
     .crescent { font-size: 3rem; margin-bottom: 10px; animation: glow 3s ease-in-out infinite; }
     @keyframes glow { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
@@ -43,30 +59,42 @@
       h1 { font-size: 1.8rem; }
       .value { font-size: 2rem; }
       .label { font-size: 0.8rem; }
-      .palestine-fixed { padding: 8px 12px; font-size: 0.85rem; }
+      .palestine { padding: 12px 16px; font-size: 0.85rem; }
     }
-    .palestine-fixed { position: fixed; right: 20px; bottom: 20px; z-index: 0; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); }
-    .palestine-fixed img.flag { width: 24px; height: 16px; }
-    .palestine-fixed .dua { color: #fff; font-size: 0.95rem; white-space: nowrap; }
+    .palestine {
+      margin-top: 20px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+    }
+    .palestine img.flag { width: 24px; height: 16px; }
+    .palestine .dua { color: #fff; font-size: 0.95rem; }
   </style>
 </head>
 <body>
   <div class="arabic-layer">﷽ الله الرحمن الرحيم سبحان الله الحمد لله الله أكبر لا إله إلا الله</div>
-  <div class="card">
-    <div class="crescent">☪</div>
-    <h1>До начала Рамадана осталось</h1>
-    <div class="timer">
-      <div class="unit"><div class="value" id="days">0</div><div class="label">дней</div></div>
-      <div class="unit"><div class="value" id="hours">0</div><div class="label">часов</div></div>
-      <div class="unit"><div class="value" id="minutes">0</div><div class="label">минут</div></div>
-      <div class="unit"><div class="value" id="seconds">0</div><div class="label">секунд</div></div>
+  <div class="container">
+    <div class="card">
+      <div class="crescent">☪</div>
+      <h1>До начала Рамадана осталось</h1>
+      <div class="timer">
+        <div class="unit"><div class="value" id="days">0</div><div class="label">дней</div></div>
+        <div class="unit"><div class="value" id="hours">0</div><div class="label">часов</div></div>
+        <div class="unit"><div class="value" id="minutes">0</div><div class="label">минут</div></div>
+        <div class="unit"><div class="value" id="seconds">0</div><div class="label">секунд</div></div>
+      </div>
+      <div class="fact" id="fact"></div>
+      <footer>«Воистину, дела оцениваются по намерениям» (аль-Бухари)</footer>
     </div>
-    <div class="fact" id="fact"></div>
-    <footer>«Воистину, дела оцениваются по намерениям» (аль-Бухари)</footer>
-  </div>
-  <div class="palestine-fixed">
-    <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Palestine.svg/320px-Flag_of_Palestine.svg.png" alt="Флаг Палестины">
-    <span class="dua">Помни Палестину — делай дуа за наших братьев и сестёр</span>
+    <div class="palestine">
+      <img class="flag" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Palestine.svg/320px-Flag_of_Palestine.svg.png" alt="Флаг Палестины">
+      <span class="dua">Помни Палестину — делай дуа за наших братьев и сестёр</span>
+    </div>
   </div>
   <script>
     const RAMADAN_START = new Date("2026-02-18T00:00:00");
